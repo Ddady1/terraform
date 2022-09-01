@@ -14,7 +14,11 @@ resource "aws_instance" "web" {
   ami = "ami-09e2d756e7d78558d" // Amazon Linux2
   instance_type = "t3.micro"
   vpc_security_group_ids = [aws_security_group.web.id]
-  user_data = templatefile("user_data.sh.tpl")
+  user_data = templatefile("user_data.sh.tpl", {
+    f_name = "Denis"
+    l_name = "Astahov"
+    names  = ["John", "Angel", "David", "Victor", "Frank", "Melissa", "Kitana"]
+  })
   tags = {
     Name = "WebServer Built by Terraform with external file"
     Owner = "David Racha"
