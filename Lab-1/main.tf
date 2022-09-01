@@ -11,7 +11,7 @@ provider "aws" {
 resource "aws_instance" "my_ubuntu" {
   ami           = "ami-0d75513e7706cf2d9"
   instance_type = "t3.micro"
-  key_name = "Ddady1-ApacheKey"
+  key_name = "ddady2-keys"
 
   tags = {
     Name = "My-Ubuntu-Server"
