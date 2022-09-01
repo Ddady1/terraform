@@ -1,7 +1,7 @@
 #----------------------------------------------------------
 #  Terraform - From Zero to Certified Professional
 #
-# Build WebServer during Bootstrap
+# Build WebServer during Bootstrap with external file
 #
 # Made by Denis Astahov
 #----------------------------------------------------------
@@ -14,17 +14,9 @@ resource "aws_instance" "web" {
   ami = "ami-09e2d756e7d78558d" // Amazon Linux2
   instance_type = "t3.micro"
   vpc_security_group_ids = [aws_security_group.web.id]
-  user_data = <<EOF
-#!/bin/bash
-yum -y update
-yum -y install httpd
-MYIP=`curl http://169.254.169.254/latest/meta-data/local-ipv4`
-echo "<h2>WebServer with PrivateIP: $MYIP</h2><br>Built by Terraform" > /var/www/html/index.html
-service httpd start
-chkconfig httpd on
-EOF
+  user_data = file("user_data.sh")
   tags = {
-    Name = "WebServer Built by Terraform"
+    Name = "WebServer Built by Terraform with external file"
     Owner = "David Racha"
   }
 }
