@@ -6,7 +6,7 @@
 # Made by Denis Astahov
 #------------------------------------------------------------------
 provider "aws" {
-  region = "ca-central-1"
+  region = "eu-west-1"
 }
 
 resource "aws_db_instance" "prod" {
