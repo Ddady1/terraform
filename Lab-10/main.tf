@@ -32,14 +32,14 @@ resource "random_password" "main" {
 
 // Store Password
 resource "aws_secretsmanager_secret" "rds_password" {
-  name                    = "/prod/rds/password" // location
+  name                    = "/prod/rds/password" // location in AWS Secret Manger
   description             = "Password for my RDS Database"
   recovery_window_in_days = 0 // days to recover password after deletion
 }
 
-resource "aws_secretsmanager_secret_version" "rds_password" {
-  secret_id     = aws_secretsmanager_secret.rds_password.id
-  secret_string = random_password.main.result
+resource "aws_secretsmanager_secret_version" "rds_password" { // --------------------
+  secret_id     = aws_secretsmanager_secret.rds_password.id   // The actual password
+  secret_string = random_password.main.result                 // --------------------
 }
 
 
@@ -52,7 +52,7 @@ resource "aws_secretsmanager_secret" "rds" {
 
 resource "aws_secretsmanager_secret_version" "rds" {
   secret_id = aws_secretsmanager_secret.rds.id
-  secret_string = jsonencode({
+  secret_string = jsonencode({                    // all details in JSON
     rds_address  = aws_db_instance.prod.address
     rds_port     = aws_db_instance.prod.port
     rds_username = aws_db_instance.prod.username
